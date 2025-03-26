@@ -84,10 +84,10 @@
         }
 
         .buttons button.equal:hover {
-            background-color: #45a049;
+            background-color: #5a905c;
         }
         .buttons button.equal:active {
-            background-color: #45a049;
+            background-color: #5a905c;
         }
 
         .buttons button.clear {
@@ -148,7 +148,18 @@
 
                 if (buttonText === "=") {
                     displayValue = eval(displayValue);
-                    display.textContent = displayValue;
+                     display.textContent = displayValue;
+                  try{
+                    if(displayValue === Infinity || displayValue === -Infinity){
+                        display.textContent = "Error"
+                    }else{
+                        display.textContent = displayValue
+                    }
+                    
+                } catch (error) {
+                    console.error("erreur d'eévaluation",error)
+                    display.textContent = "error"
+                }
                 } else if (buttonText === "C") {
                     displayValue = ''; 
                     display.textContent = '0';
