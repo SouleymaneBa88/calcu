@@ -38,6 +38,9 @@
             font-size: 2em;
             border-radius: 5px;
             margin-bottom: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .buttons {
@@ -126,14 +129,10 @@
             <button>2</button>
             <button>3</button>
             <button class="operation">.</button>
-            
-            
             <button>(</button>
             <button>0</button>
             <button>)</button>
             <button class="equal">=</button>
-
-
         </div>
     </div>
 
@@ -142,30 +141,29 @@
         let display = document.querySelector('.display');
         let displayValue = '';
 
+        
+
         btn.forEach(button => {
             button.addEventListener("click", function() {
                 const buttonText = button.textContent;
 
                 if (buttonText === "=") {
-                    displayValue = eval(displayValue);
-                     display.textContent = displayValue;
-                  try{
-                    if(displayValue === Infinity || displayValue === -Infinity){
-                        display.textContent = "Error"
-                    }else{
-                        display.textContent = displayValue
+                    try {
+                        if(displayValue.includes('/0')){
+                            display.textContent = "Error";
+                        } else {
+                            displayValue = eval(displayValue);
+                           
+                            display.textContent = displayValue;
+                        }
+                    } catch (error) {
+                        console.error("Erreur d'évaluation", error);
+                        display.textContent = "Error";
                     }
-                    
-                } catch (error) {
-                    console.error("erreur d'eévaluation",error)
-                    display.textContent = "error"
-                }
                 } else if (buttonText === "C") {
                     displayValue = ''; 
                     display.textContent = '0';
-                }
-              
-                 else {
+                } else {
                     if (displayValue === '0') {
                         displayValue = buttonText;
                     } else {
@@ -173,9 +171,11 @@
                     }
                     display.textContent = displayValue;
                 }
+
+                // Ajuster la taille de la police à chaque ajout de caractère
+                // adjustFontSize();
             });
         });
-
 
     </script>
 
